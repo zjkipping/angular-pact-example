@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "pact-example"
+    }
+  },
+  "defaultProject": "pact-example",
+  "cli": {
+    "analytics": false
+  }
 }
