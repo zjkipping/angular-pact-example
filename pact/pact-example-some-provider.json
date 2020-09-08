@@ -1,0 +1,191 @@
+{
+  "consumer": {
+    "name": "pact-example"
+  },
+  "provider": {
+    "name": "some-provider"
+  },
+  "interactions": [
+    {
+      "description": "a request for specific books in the library",
+      "providerState": "has books in library",
+      "request": {
+        "method": "GET",
+        "path": "/books",
+        "query": "title=Wheel+of+Time&author=Robert+Jordan",
+        "matchingRules": {
+          "$.query.title[0]": {
+            "match": "type"
+          },
+          "$.query.author[0]": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": [
+          {
+            "id": "1",
+            "name": "Harry Potter",
+            "author": "J. K. Rowling",
+            "publishDate": "‎26 June 1997",
+            "isbn": "9780545010221"
+          },
+          {
+            "id": "2",
+            "name": "Mistborn",
+            "author": "Brandon Sanderson",
+            "publishDate": "‎July 17, 2006",
+            "isbn": "0765350386"
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for a specific book",
+      "providerState": "has specific book in library",
+      "request": {
+        "method": "GET",
+        "path": "/books/5"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+          "id": "5",
+          "name": "Stormlight Archive",
+          "author": "Brandon Sanderson",
+          "publishDate": "‎August 31, 2010",
+          "isbn": "1250776635"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request for adding a book to the library",
+      "providerState": "does not have the book in library",
+      "request": {
+        "method": "POST",
+        "path": "/books",
+        "body": {
+          "name": "Stormlight Archive",
+          "author": "Brandon Sanderson",
+          "publishDate": "‎August 31, 2010",
+          "isbn": "1250776635"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+        }
+      }
+    },
+    {
+      "description": "a request for updating a book in the library",
+      "providerState": "the specified book exists in the library",
+      "request": {
+        "method": "PUT",
+        "path": "/books/5",
+        "body": {
+          "id": "5",
+          "name": "Stormlight Archive",
+          "author": "Brandon Sanderson",
+          "publishDate": "‎August 31, 2010",
+          "isbn": "1250776635"
+        },
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+        }
+      }
+    },
+    {
+      "description": "a request for all the books in the library",
+      "providerState": "has books in library",
+      "request": {
+        "method": "GET",
+        "path": "/books"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": [
+          {
+            "id": "1",
+            "name": "Harry Potter",
+            "author": "J. K. Rowling",
+            "publishDate": "‎26 June 1997",
+            "isbn": "9780545010221"
+          },
+          {
+            "id": "2",
+            "name": "Mistborn",
+            "author": "Brandon Sanderson",
+            "publishDate": "‎July 17, 2006",
+            "isbn": "0765350386"
+          }
+        ],
+        "matchingRules": {
+          "$.body": {
+            "match": "type"
+          }
+        }
+      }
+    },
+    {
+      "description": "a request to delete the specified book",
+      "providerState": "the specified book exists in the library",
+      "request": {
+        "method": "DELETE",
+        "path": "/books/5"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        "body": {
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}
